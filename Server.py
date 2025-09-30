@@ -3574,13 +3574,13 @@ if __name__ == "__main__":
     # Get absolute paths to the SSL certificate and key files
     key_file_path = os.path.join(os.path.dirname(__file__), '../certificates/key.pem')
     cert_file_path = os.path.join(os.path.dirname(__file__), '../certificates/cert.pem')
-
+    port = int(os.environ.get("PORT", 8000))
     uvicorn.run(
         "Server:app",  # Replace with your actual file/module name
         host="0.0.0.0",  # Listen on all network interfaces (public access)
-        port=8000,  # Or another port like 4433 if needed
-        ssl_keyfile=key_file_path,  # Path to your private key
-        ssl_certfile=cert_file_path  # Path to your certificate
+        port=port,  # Or another port like 4433 if needed
+        # ssl_keyfile=key_file_path,  # Path to your private key
+        # ssl_certfile=cert_file_path  # Path to your certificate
     )
 
 
