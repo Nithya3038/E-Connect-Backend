@@ -33,7 +33,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # GridFS setup
 from pymongo import MongoClient
 import gridfs
-client = MongoClient("mongodb://localhost:27017") 
+mongoDB_uri = os.environ.get("MONGODB_URI", "mongodb://localhost:27017")
+client = MongoClient(mongoDB_uri)
 db = client["RBG_AI"]  
 fs = gridfs.GridFS(db)
 
