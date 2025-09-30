@@ -3573,16 +3573,12 @@ async def test_admin_wfh_notifications():
         return {"success": False, "error": str(e)}
 
 if __name__ == "__main__":
-    # Get absolute paths to the SSL certificate and key files
-    key_file_path = os.path.join(os.path.dirname(__file__), '../certificates/key.pem')
-    cert_file_path = os.path.join(os.path.dirname(__file__), '../certificates/cert.pem')
+    import os
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(
-        "Server:app",  # Replace with your actual file/module name
-        host="0.0.0.0",  # Listen on all network interfaces (public access)
-        port=port,  # Or another port like 4433 if needed
-        # ssl_keyfile=key_file_path,  # Path to your private key
-        # ssl_certfile=cert_file_path  # Path to your certificate
+        "Server:app",
+        host="0.0.0.0",
+        port=port
     )
 
 
