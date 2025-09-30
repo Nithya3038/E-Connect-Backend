@@ -182,6 +182,7 @@ import atexit
 
 app = FastAPI()
 origins = [
+    "https://e-connect-frontend.vercel.app",
     "*"    # Allow all origins for development
 ]
 
