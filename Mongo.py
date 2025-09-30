@@ -43,7 +43,10 @@ from pymongo import MongoClient
 
   # For storing yearly working days
 
-client= MongoClient("mongodb://localhost:27017")
+# client= MongoClient("mongodb://localhost:27017")
+
+mongoDB_uri = os.environ.get("MONGODB_URI", "mongodb://localhost:27017")
+client = MongoClient(mongoDB_uri)
 db = client["RBG_AI"]
 client=client.RBG_AI
 Users=client.Users
