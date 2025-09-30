@@ -18,7 +18,7 @@ def addnewdata(name,data,id):
         new_entry = pd.DataFrame({'id':rid,'name': [name], 'data': [data]})
         df = pd.concat([df, new_entry], ignore_index=True)
         df.to_csv(existing_csv_file, index=False)
-        a= os.path.dirname(os.path.abspath(__file__))+f'\Csvdata\{id}.csv'
+        a = os.path.join(os.path.dirname(os.path.abspath(__file__)), f"Csvdata/{id}.csv")
         return str(a)
     except Exception as e:
         raise HTTPException(status_code=300, detail=e)
