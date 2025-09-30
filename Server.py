@@ -181,10 +181,10 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 import atexit
 
 
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 origins = [
-    "https://e-connect-frontend.vercel.app",
-    "*"    # Allow all origins for development
+    "https://e-connect-frontend.vercel.app", 
 ]
 
 app.add_middleware(
