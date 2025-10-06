@@ -1,0 +1,26 @@
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+appenv/
+
+# Environment and secret files
+.env
+*.key
+*.pem
+
+# Uploads and data
+uploads/
+Csvdata/
+
+# System / IDE files
+.DS_Store
+*.log
+
+# OS files (Windows)
+Thumbs.db
+desktop.ini
