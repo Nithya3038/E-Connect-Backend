@@ -33,7 +33,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # GridFS setup
 from pymongo import MongoClient
 import gridfs
-client = MongoClient("mongodb://localhost:27017") 
+mongo_url = os.environ.get("MONGODB_URI", "mongodb://localhost:27017")
+client = MongoClient(mongo_url)
 db = client["RBG_AI"]  
 fs = gridfs.GridFS(db)
 
@@ -187,7 +188,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["https://e-connect-frontend.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -3575,10 +3576,11 @@ if __name__ == "__main__":
     key_file_path = os.path.join(os.path.dirname(__file__), '../certificates/key.pem')
     cert_file_path = os.path.join(os.path.dirname(__file__), '../certificates/cert.pem')
 
+    port = int(os.environ.get("PORT", 8000))
     uvicorn.run(
         "Server:app",  # Replace with your actual file/module name
         host="0.0.0.0",  # Listen on all network interfaces (public access)
-        port=8000,  # Or another port like 4433 if needed
+        port=port, 
         ssl_keyfile=key_file_path,  # Path to your private key
         ssl_certfile=cert_file_path  # Path to your certificate
     )
