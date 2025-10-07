@@ -922,7 +922,7 @@ async def fetch_user_leave_requests(selectedOption: str = Query(..., alias="sele
 
 
 # Admin Page To Fetch Only Managers Leave Requests
-@app.get("/manager_leave_requests/")
+@app.get("/manager_leave_requests")
 async def fetch_manager_leave_requests(selectedOption: str = Query(..., alias="selectedOption")):
     user_leave_requests = get_manager_leave_requests(selectedOption) # Admin sees manager requests
     return {"user_leave_requests": user_leave_requests or []}
