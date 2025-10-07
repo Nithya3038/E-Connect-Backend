@@ -882,7 +882,7 @@ async def bonus_leave_request(item: Item9):
         raise HTTPException(status_code=400, detail=str(e))
 
 # Leave History
-@app.get("/leave-History/{userid}")
+@app.get("/leave-History/{userid}/")
 async def get_leave_History(userid: str = Path(..., title="The userid of the user")):
     try:
        
