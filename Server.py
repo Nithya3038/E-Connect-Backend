@@ -33,8 +33,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # GridFS setup
 from pymongo import MongoClient
 import gridfs
-mongo_url = os.environ.get("MONGODB_URI", "mongodb://localhost:27017")
-client = MongoClient(mongo_url)
+client = MongoClient("mongodb://localhost:27017") 
 db = client["RBG_AI"]  
 fs = gridfs.GridFS(db)
 
@@ -188,7 +187,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://e-connect-frontend.vercel.app"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -882,7 +881,7 @@ async def bonus_leave_request(item: Item9):
         raise HTTPException(status_code=400, detail=str(e))
 
 # Leave History
-@app.get("/leave-History/{userid}/")
+@app.get("/leave-History/{userid}")
 async def get_leave_History(userid: str = Path(..., title="The userid of the user")):
     try:
        
@@ -922,7 +921,7 @@ async def fetch_user_leave_requests(selectedOption: str = Query(..., alias="sele
 
 
 # Admin Page To Fetch Only Managers Leave Requests
-@app.get("/manager_leave_requests")
+@app.get("/manager_leave_requests/")
 async def fetch_manager_leave_requests(selectedOption: str = Query(..., alias="selectedOption")):
     user_leave_requests = get_manager_leave_requests(selectedOption) # Admin sees manager requests
     return {"user_leave_requests": user_leave_requests or []}
@@ -1619,7 +1618,7 @@ async def permission_request(item: Item8):
         print(f"❌ Error in permission request: {e}")
         raise HTTPException(400, str(e))
    
-@app.get("/Other-leave-history/{userid}/")
+@app.get("/Other-leave-history/{userid}")
 async def get_other_leave_history(userid: str = Path(..., title="The ID of the user")):
     try:
         # Call your function to get the leave history for the specified user
@@ -1632,7 +1631,7 @@ async def get_other_leave_history(userid: str = Path(..., title="The ID of the u
         raise HTTPException(status_code=500, detail=str(e))
    
    
-@app.get("/Permission-history/{userid}/")
+@app.get("/Permission-history/{userid}")
 async def get_Permission_history(userid: str = Path(..., title="The ID of the user")):
     try:
         # Call your function to get the leave history for the specified user
@@ -2416,13 +2415,16 @@ def edit_task(request: Taskedit):
             priority=request.priority,
             subtasks=request.subtasks,
             comments=request.comments,
-            files=request.files
+            files=request.files,
+            verified=request.verified 
         )
         
         if result == "Task not found":
             raise HTTPException(status_code=404, detail="Task not found")
         elif result == "No fields to update":
             raise HTTPException(status_code=400, detail="No fields to update")
+        elif result == "Cannot demote verified task":
+            raise HTTPException(status_code=403, detail="Cannot change status of a verified task")
         
         return {"message": result}
         
@@ -3576,11 +3578,10 @@ if __name__ == "__main__":
     key_file_path = os.path.join(os.path.dirname(__file__), '../certificates/key.pem')
     cert_file_path = os.path.join(os.path.dirname(__file__), '../certificates/cert.pem')
 
-    port = int(os.environ.get("PORT", 8000))
     uvicorn.run(
         "Server:app",  # Replace with your actual file/module name
         host="0.0.0.0",  # Listen on all network interfaces (public access)
-        port=port, 
+        port=8000,  # Or another port like 4433 if needed
         ssl_keyfile=key_file_path,  # Path to your private key
         ssl_certfile=cert_file_path  # Path to your certificate
     )
