@@ -181,9 +181,9 @@ class Taskedit(BaseModel):
     status: Optional[str] = None
     due_date: Optional[str] = None
     priority: Optional[str] = None 
-    subtasks: List[SubTask] = []
-    comments: List[Comment] = []
-    files: List[FileRef] = []
+    subtasks: Optional[List[Any]] = None
+    comments: Optional[List[Any]] = None
+    files: Optional[List[Any]] = None
     verified: Optional[bool] = None 
 
 class Gettasks(BaseModel):
