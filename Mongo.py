@@ -43,7 +43,7 @@ from pymongo import MongoClient
 
   # For storing yearly working days
 
-mongo_url = os.environ.get("MONGODB_URI", "mongodb://localhost:27017")
+mongo_url = os.environ.get("MONGODB_URI")
 client = MongoClient(
     mongo_url,
     serverSelectionTimeoutMS=30000,
